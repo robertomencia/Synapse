@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-size: 32px; font-weight: bold; font-family: Arial; }
+      .text-main { font-size: 18px; font-family: Arial; }
+      .text-small { font-size: 14px; font-family: Arial; }
+    </style>
+  </defs>
+  <rect width="1200" height="400" fill="#0F0F19"/>
+  <text x="50" y="50" class="title" fill="#B400FF">AGENTS ANALYZING</text>
+  <rect x="50" y="90" width="260" height="100" fill="none" stroke="#00B4FF" stroke-width="2" opacity="1"/>
+  <text x="60" y="120" class="text-main" fill="#00B4FF" opacity="1">Dev Agent</text>
+  <text x="60" y="145" class="text-small" fill="#A0A0B4" opacity="1">Processing (100%)</text>
+  <rect x="60" y="155" width="240" height="10" fill="#00B4FF" opacity="1"/>
+  <rect x="325" y="90" width="260" height="100" fill="none" stroke="#FF5050" stroke-width="2" opacity="1"/>
+  <text x="335" y="120" class="text-main" fill="#FF5050" opacity="1">Security Agent</text>
+  <text x="335" y="145" class="text-small" fill="#A0A0B4" opacity="1">Processing (100%)</text>
+  <rect x="335" y="155" width="240" height="10" fill="#FF5050" opacity="1"/>
+  <rect x="600" y="90" width="260" height="100" fill="none" stroke="#00FF78" stroke-width="2" opacity="1"/>
+  <text x="610" y="120" class="text-main" fill="#00FF78" opacity="1">Ops Agent</text>
+  <text x="610" y="145" class="text-small" fill="#A0A0B4" opacity="1">Processing (100%)</text>
+  <rect x="610" y="155" width="240" height="10" fill="#00FF78" opacity="1"/>
+  <rect x="875" y="90" width="260" height="100" fill="none" stroke="#B400FF" stroke-width="2" opacity="0.7470588235294118"/>
+  <text x="885" y="120" class="text-main" fill="#B400FF" opacity="0.7470588235294118">Life Agent</text>
+  <text x="885" y="145" class="text-small" fill="#A0A0B4" opacity="0.7470588235294118">Processing (74%)</text>
+  <rect x="885" y="155" width="179.29411764705884" height="10" fill="#B400FF" opacity="0.7470588235294118"/>
+</svg>

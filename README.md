@@ -43,10 +43,10 @@ Y lo hace sin enviar ni un byte a ninguna nube.
 ## Demo
 
 <div align="center">
-
-> 🎬 **Demo GIF próximamente** — Synapse detecta un cambio en `auth.py`, activa Dev y Security agents, coordina via LangGraph, y notifica en el HUD — todo sin escribir un solo comando.
-
+  <img src="assets/synapse_demo.gif" alt="Synapse Demo" width="600"/>
 </div>
+
+> Synapse detecta un cambio en `auth.py`, activa los agentes Dev y Security, coordina via LangGraph, y notifica en el HUD — todo sin escribir un solo comando.
 
 **Ejemplo real:**
 

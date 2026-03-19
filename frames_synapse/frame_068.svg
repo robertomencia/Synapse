@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { font-size: 32px; font-weight: bold; font-family: Arial; }
+      .text-main { font-size: 18px; font-family: Arial; }
+      .text-small { font-size: 14px; font-family: Arial; }
+    </style>
+  </defs>
+  <rect width="1200" height="400" fill="#0F0F19"/>
+  <text x="50" y="50" class="title" fill="#00FF78">ANALYSIS COMPLETE</text>
+  <rect x="50" y="90" width="1100" height="260" fill="none" stroke="#00FF78" stroke-width="3"/>
+  <text x="70" y="120" class="text-main" fill="#00B4FF" opacity="1">• Dev Agent:</text>
+  <text x="320" y="120" class="text-small" fill="#F0F0F0" opacity="1">Found 3 code patterns requiring review</text>
+  <text x="70" y="175" class="text-main" fill="#00FF78" opacity="1">• Security Agent:</text>
+  <text x="320" y="175" class="text-small" fill="#F0F0F0" opacity="1">No vulnerabilities detected</text>
+  <text x="70" y="230" class="text-main" fill="#00FF78" opacity="1">• Ops Agent:</text>
+  <text x="320" y="230" class="text-small" fill="#F0F0F0" opacity="1">CPU: 45% | RAM: 3.2GB (normal)</text>
+  <text x="70" y="285" class="text-main" fill="#B400FF" opacity="0.5448275862068965">• Life Agent:</text>
+  <text x="320" y="285" class="text-small" fill="#F0F0F0" opacity="0.5448275862068965">High focus period - recommended continuation</text>
+</svg>
