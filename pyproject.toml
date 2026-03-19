@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "synapse"
+version = "0.1.0"
+description = "AI Reality Layer — always on, always watching, always acting"
+requires-python = ">=3.11"
+dependencies = [
+    # Core async
+    "anyio>=4.0.0",
+    "aiohttp>=3.9.0",
+    # Orchestration
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+    # Memory
+    "chromadb>=0.5.0",
+    # LLM
+    "ollama>=0.3.0",
+    # Config
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+    "python-dotenv>=1.0.0",
+    # Perception
+    "watchdog>=4.0.0",
+    "mss>=9.0.0",
+    "pygetwindow>=0.0.9",
+    # HUD
+    "PyQt6>=6.7.0",
+    # CLI
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+    # System
+    "psutil>=6.0.0",
+]
+
+[project.optional-dependencies]
+voice = ["openai-whisper>=20240930"]
+dev   = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "ruff>=0.7.0",
+    "mypy>=1.11",
+]
+
+[project.scripts]
+synapse = "cli.main:app"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
