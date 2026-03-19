@@ -24,6 +24,15 @@ data/
 .idea/
 *.swp
 
+# Claude Code internal
+.claude/
+
+# Demo generation artifacts
+frames_synapse/
+create_demo.py
+generate_gif.py
+scripts/
+
 # OS
 .DS_Store
 Thumbs.db
