@@ -97,10 +97,6 @@ class DependencyCollector(BaseCollector):
                     ecosystem="npm",
                     source_file=str(path),
                 )
-        if deps:
-            # Update store immediately (don't wait for scan)
-            import asyncio
-            asyncio.create_task(self._store.update_dependencies(deps))
         return deps
 
     def _parse_requirements_txt(self, path: Path) -> dict[str, DependencyInfo]:

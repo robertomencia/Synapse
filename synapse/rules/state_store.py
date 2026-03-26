@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import copy
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 
@@ -77,17 +77,17 @@ class StateStore:
     async def update_cves(self, entries: list[CVEEntry]) -> None:
         async with self._lock:
             self._state.cve_entries = entries
-            self._state.last_cve_check = datetime.utcnow()
+            self._state.last_cve_check = datetime.now(timezone.utc)
 
     async def update_calendar(self, events: list[CalendarEvent]) -> None:
         async with self._lock:
             self._state.upcoming_events = events
-            self._state.last_calendar_check = datetime.utcnow()
+            self._state.last_calendar_check = datetime.now(timezone.utc)
 
     async def update_active_file(self, path: str) -> None:
         async with self._lock:
             self._state.last_changed_file = path
-            self._state.last_changed_at = datetime.utcnow()
+            self._state.last_changed_at = datetime.now(timezone.utc)
 
     async def set_extra(self, key: str, value: Any) -> None:
         async with self._lock:
