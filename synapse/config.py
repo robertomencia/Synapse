@@ -37,6 +37,16 @@ class Settings(BaseSettings):
     memory_max_episodes: int = 10000
     memory_retention_days: int = 90
 
+    # Rule Engine
+    rule_engine_enabled: bool = True
+    rule_engine_eval_interval: int = 30  # seconds between evaluations
+
+    # Collectors
+    rss_poll_interval: int = 300  # seconds (5 minutes)
+    rss_extra_feed_urls: str = ""  # comma-separated extra Atom feed URLs
+    calendar_ics_path: str = ""  # path to local .ics file; empty = disabled
+    calendar_lookahead_hours: int = 4
+
     @field_validator("chroma_path", "sqlite_path", "synapse_data_dir", mode="before")
     @classmethod
     def expand_path(cls, v: str | Path) -> Path:

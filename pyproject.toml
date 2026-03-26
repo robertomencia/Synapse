@@ -33,6 +33,8 @@ dependencies = [
     "rich>=13.0.0",
     # System
     "psutil>=6.0.0",
+    # Calendar parsing (Rule Engine)
+    "icalendar>=5.0.0",
 ]
 
 [project.optional-dependencies]

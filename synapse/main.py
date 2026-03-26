@@ -93,14 +93,77 @@ async def run(hud: bool | None = None) -> None:
         VSCodeContext(interval=10),
     ]
 
-    # 8. Start everything
+    # 8. Rule Engine — proactive, deterministic layer
+    from synapse.rules.state_store import StateStore
+    from synapse.rules.engine import RuleEngine
+    from synapse.rules.rules import RULES
+    from synapse.collectors.dependency_collector import DependencyCollector
+    from synapse.collectors.rss_collector import RSSCollector
+    from synapse.collectors.calendar_collector import CalendarCollector
+    from synapse.agents.proactive_agent import ProactiveAgent
+
+    state_store = StateStore()
+
+    # Wire ProactiveAgent into the orchestrator
+    proactive_agent = ProactiveAgent(memory, llm)
+    agents.append(proactive_agent)
+    bus.subscribe("rule.*", orchestrator.handle)
+    logger.info("ProactiveAgent registered, orchestrator subscribed to rule.* events")
+
+    # Collectors
+    collectors = []
+
+    initial_workspace = existing_paths[0] if existing_paths else None
+    dep_collector = DependencyCollector(state_store, initial_workspace=initial_workspace)
+    collectors.append(dep_collector)
+
+    extra_urls = [u.strip() for u in settings.rss_extra_feed_urls.split(",") if u.strip()]
+    rss_collector = RSSCollector(
+        state_store,
+        extra_feed_urls=extra_urls or None,
+        poll_interval=settings.rss_poll_interval,
+    )
+    collectors.append(rss_collector)
+
+    ics_path_str = settings.calendar_ics_path.strip()
+    if ics_path_str:
+        ics_path = Path(ics_path_str).expanduser().resolve()
+        if ics_path.exists():
+            cal_collector = CalendarCollector(
+                state_store,
+                ics_path=ics_path,
+                poll_interval=60,
+                lookahead_hours=settings.calendar_lookahead_hours,
+            )
+            collectors.append(cal_collector)
+            logger.info("CalendarCollector enabled: %s", ics_path)
+        else:
+            logger.warning("CALENDAR_ICS_PATH set but file not found: %s", ics_path)
+    else:
+        logger.info("CalendarCollector disabled (set CALENDAR_ICS_PATH in .env to enable)")
+
+    rule_engine = RuleEngine(
+        state_store,
+        RULES,
+        eval_interval=settings.rule_engine_eval_interval,
+    )
+
+    # 9. Start everything
     tasks: list[asyncio.Task] = []
     for sensor in sensors:
         tasks.append(asyncio.create_task(sensor.start()))
 
     tasks.append(asyncio.create_task(ops_agent.start_polling()))
 
-    logger.info("◈ Synapse is alive. Watching. Acting.")
+    for collector in collectors:
+        tasks.append(asyncio.create_task(collector.start()))
+
+    if settings.rule_engine_enabled:
+        tasks.append(asyncio.create_task(rule_engine.start()))
+        logger.info("RuleEngine started with %d rules (eval every %ds)",
+                    len(RULES), settings.rule_engine_eval_interval)
+
+    logger.info("◈ Synapse is alive. Watching. Acting. Proactively.")
 
     # Graceful shutdown
     stop_event = asyncio.Event()
@@ -125,6 +188,10 @@ async def run(hud: bool | None = None) -> None:
             task.cancel()
         for sensor in sensors:
             await sensor.stop()
+        for collector in collectors:
+            await collector.stop()
+        if settings.rule_engine_enabled:
+            await rule_engine.stop()
         await bus.stop()
         await llm.close()
         memory.close()
